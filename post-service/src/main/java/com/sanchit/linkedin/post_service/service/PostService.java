@@ -3,6 +3,7 @@ package com.sanchit.linkedin.post_service.service;
 import com.sanchit.linkedin.post_service.dto.PostCreateRequestDTO;
 import com.sanchit.linkedin.post_service.dto.PostDTO;
 import com.sanchit.linkedin.post_service.entity.Post;
+import com.sanchit.linkedin.post_service.exception.ResourceNotFoundException;
 import com.sanchit.linkedin.post_service.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,11 +25,10 @@ public class PostService {
         return modelMapper.map(savedPost, PostDTO.class);
     }
 
-    public Post getPostById(Long postId) {
+    public PostDTO getPostById(Long postId) {
         log.debug("Retrieving post with Id : {}", postId);
-        return postRepository.findById(postId).orElseThrow(
-                new ResourceNotFoundException("Post not found for id : " + postId);
-        );
+        Post post = postRepository.findById(postId).orElseThrow( () ->
+                new ResourceNotFoundException("Post not Found :- " + postId));
+        return modelMapper.map(post, PostDTO.class);
     }
-
 }

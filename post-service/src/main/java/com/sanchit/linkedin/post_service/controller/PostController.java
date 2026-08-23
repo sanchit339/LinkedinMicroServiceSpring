@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
@@ -23,9 +25,16 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<Post> getPost(@PathVariable Long postId){
-        Post post = postService.getPostById(postId);
+    public ResponseEntity<PostDTO> getPost(@PathVariable Long postId){
+        System.out.println(postId);
+        PostDTO postDTO = postService.getPostById(postId);
 
-        return post != null ? ResponseEntity.ok(post) : ResponseEntity.notFound().build();
+        return ResponseEntity.ok(postDTO);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<PostDTO>> getAllPostOfTheUser(@PathVariable Long userId){
+        List<PostDTO> allPost = postService.getAllPostOfUser(userId);
+        return ResponseEntity<>(allPost, HttpStatus.OK);
     }
 }

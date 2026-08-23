@@ -10,4 +10,14 @@ public class APIError {
     private LocalDateTime timeStamp;
     private String error;
     private HttpStatus statusCode;
+
+    public APIError(){
+        this.timeStamp = LocalDateTime.now();
+    }
+
+    public APIError(String error, HttpStatus httpStatus) {
+        this();
+        this.error = error;
+        this.statusCode = httpStatus;
+    }
 }

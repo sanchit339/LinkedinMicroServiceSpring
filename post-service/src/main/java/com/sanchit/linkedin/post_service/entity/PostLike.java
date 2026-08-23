@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Table(name = "posts")
+@Table(name = "post_like")
 public class PostLike {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
